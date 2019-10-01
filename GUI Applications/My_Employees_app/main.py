@@ -1,6 +1,13 @@
 from PyQt5.QtWidgets import *
 import sys
-import mysql.connector
+import sqlite3
+from PyQt5.QtGui import QPixmap, QFont
+from PyQt5 import uic, Qt
+
+
+
+con = sqlite3.connect('employees.db')
+cur = con.cursor()
 
 class Main(QWidget):
     def __init__(self):
@@ -19,6 +26,7 @@ class Main(QWidget):
     def main_design(self):
         self.employeeList=QListWidget()
         self.btnNew = QPushButton('New')
+        self.btnNew.clicked.connect(self.addEmployee)
         self.btnUpdate = QPushButton('Update')
         self.btnDelete = QPushButton('Delete')
 
@@ -46,6 +54,37 @@ class Main(QWidget):
         ############# SETTING MAIN WINDOW LAYOUT #################
 
         self.setLayout(self.mainLayout)
+
+    def addEmployee(self):
+        self.newEmployee = AddEmployee() # that part of code transfer us to new Window ( new windows is created as new class)
+        # self.close()
+
+
+class AddEmployee(QMainWindow, QWidget):
+    
+    def __init__(self):
+        super().__init__()
+        uic.loadUi('add_employee.ui', self) # adding UI from designer.exe
+        
+        self.setWindowTitle("Add Employees")
+        self.setGeometry(450,150,350,600)
+        self.UI()
+        self.show()
+
+    def UI(self):
+        self.mainDesign()
+        
+    
+    def mainDesign(self):
+        self.imgAdd.setPixmap(QPixmap('icons/person.png'))
+        self.nameEntry.setPlaceholderText('Enter Employee Name')
+        self.surnameEntry.setPlaceholderText('Enter Employee Surname')
+        self.phoneEntry.setPlaceholderText('Enter Employee Phone Number')
+        self.emailEntry.setPlaceholderText('Enter Employee email')
+    
+
+
+
 
 ########################################################
 def main():
