@@ -11,10 +11,7 @@ cur = con.cursor()
 defaultImg = 'person.png'
 person_id = None
 class Main(QWidget):
-    '''
-    Class Main is for create 
-
-    '''
+    
     def __init__(self):
         super().__init__()
         self.setWindowTitle("My Employees")
@@ -41,10 +38,7 @@ class Main(QWidget):
         self.btnDelete.clicked.connect(self.deleteEmployee)
         
     def layouts(self):
-        '''
-        Method that sets layout for our main window. 
-
-        '''
+        
         ############# LAYOUTS #################
         self.mainLayout= QHBoxLayout()
         self.leftLayout= QFormLayout()
@@ -68,9 +62,7 @@ class Main(QWidget):
         self.setLayout(self.mainLayout)
 
     def addEmployee(self):
-    '''
-    Method addEmployee
-    '''
+        
 
         self.newEmployee = AddEmployee() # that part of code transfer us to new Window ( new windows is created as new class)
         self.close()
@@ -160,7 +152,7 @@ class Main(QWidget):
             self.close()
 
         else:
-            QMessageBox.information(self, 'info','Please selcet person to update')    
+            QMessageBox.information(self, 'Info','Please selcet person to update')    
 
 class UpdateEmployee(QMainWindow, QWidget):
     def __init__(self):
@@ -227,10 +219,10 @@ class UpdateEmployee(QMainWindow, QWidget):
 
         if (name and surname and phone != ""):
             try:
-                #query="UPDATE employees set name =?, surname=?, phone=?,email=?,img=?,address=? WHERE id=?"
-                #cur.execute (query,(name,surname,phone,email,img,address,person_id))
+                query="UPDATE employees set name =?, surname=?, phone=?,email=?,img=?,address=? WHERE id=?"
+                cur.execute (query,(name,surname,phone,email,img,address,person_id))
 
-                query = f'UPDATE employees set name ={name}, surname={?}, phone=?,email=?,img=?,address=? WHERE id=?'
+                
                 con.commit()
                 QMessageBox.information(self,'Success', 'Person has been updated')
                 self.close()
